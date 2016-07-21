@@ -35,3 +35,26 @@ function firstVal(arr, callback) {
 }
 
 firstVal({'one': 1, 'two': 2}, anyFunction); // Value: 1 at Index: one From: [object Object]
+
+// Write a function, once, that takes a function and returns a version of that function which can only be called once. [Hint: you need a closure] You probably don't want to be able to double charge someone's credit card.
+
+function once(callback){
+  var called = 0;
+  return function() {
+    if (called === 0) {
+      called++;
+      return callback.apply(this, arguments);
+    } else {
+      console.log("Operation called already");
+    }
+  };
+}
+
+function chargeCreditCard(card, price) {
+  console.log(arguments);
+}
+
+var processPayment = once(chargeCreditCard);
+
+processPayment(123, 100);
+processPayment(123, 100);
